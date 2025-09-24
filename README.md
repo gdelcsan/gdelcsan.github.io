@@ -1,1 +1,1 @@
-# gdelcsan-gmail.com.github.io
+# gdelcsan.github.io
