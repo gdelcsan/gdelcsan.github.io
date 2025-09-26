@@ -2,8 +2,8 @@ vCard - Personal Portfolio
 
 # sidebar
 
-alt = Gabriela del Cristo Sanchez
-Gabriela del Cristo Sanchez
+alt = Gabriela del Cristo
+Gabriela del Cristo
 Web developer
 
 Show Contacts
