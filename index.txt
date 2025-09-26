@@ -2,30 +2,26 @@ vCard - Personal Portfolio
 
 # sidebar
 
-alt = Richard hanrick
-Richard hanrick
+alt = Gabriela del Cristo Sanchez
+Gabriela del Cristo Sanchez
 Web developer
 
 Show Contacts
 
 Email
-richard@example.com
+gdelcsan@gmail.com
 
 Phone
-+1 (213) 352-2795
-
-Birthday
-June 23, 1982
++1 (239) 440-2408
 
 Location
-Sacramento, California, USA
+Miami, Florida, USA
 
 # navbar
 
 About
 Resume
 Portfolio
-Blog
 Contact
 
 # about
