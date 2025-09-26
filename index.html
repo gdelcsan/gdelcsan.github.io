@@ -1,502 +1,1201 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { Mail, Github, Linkedin, Globe, ExternalLink, Brain, TerminalSquare, Smartphone, Layout, Rocket, Sparkles, Code2, GraduationCap, Cpu, Database, Boxes, Youtube, Moon, SunMedium } from "lucide-react";
-import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="en">
 
-// --- Quick Start ------------------------------------------------------------
-// 1) Drop this file into a Vite/Next/CRA project using Tailwind + shadcn/ui.
-// 2) Update the `profile`, `projects`, and `aiDemos` data below.
-// 3) Deploy to GitHub Pages (Vite/CRA) or Vercel/Netlify (Next/Vite).
-// 4) Optional: Replace imports with your preferred UI library if not using shadcn.
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard - Personal Portfolio</title>
 
-// --- Content ----------------------------------------------------------------
-const profile = {
-  name: "Your Name",
-  title: "Web/App Developer · AI/ML Enthusiast",
-  tagline:
-    "I build fast, accessible web & mobile experiences and ship AI features powered by LLMs and vector search.",
-  location: "Miami, FL",
-  email: "your.email@example.com",
-  github: "https://github.com/your-username",
-  linkedin: "https://www.linkedin.com/in/your-handle/",
-  website: "https://your-domain.com",
-};
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
 
-const skills = {
-  web: ["TypeScript", "React", "Next.js", "Node.js", "Express", "Vite", "Tailwind CSS", "tRPC", "GraphQL"],
-  mobile: ["React Native", "Expo", "Flutter (basic)", "iOS/Android tooling"],
-  ai: ["Python", "PyTorch", "Transformers", "LangChain", "OpenAI API", "RAG", "Vector DBs (Pinecone/FAISS)", "LLM Ops"],
-  cloud: ["Docker", "PostgreSQL", "Prisma", "Supabase", "Firebase", "AWS", "Vercel", "CI/CD"],
-};
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
 
-const projects = [
-  {
-    title: "DevBoard — Developer Dashboard",
-    description:
-      "Personal dashboard with GitHub activity, issue triage, and CI status. Built with Next.js App Router, Server Actions, and edge caching.",
-    stack: ["Next.js", "TypeScript", "Tailwind", "GitHub API"],
-    links: {
-      repo: "https://github.com/your-username/devboard",
-      demo: "https://devboard.your-domain.com",
-    },
-    category: "web",
-    highlight: true,
-  },
-  {
-    title: "PocketChef — iOS/Android App",
-    description:
-      "Cross-platform app that recommends recipes from pantry photos. Uses on-device model for ingredient detection and a small LLM for steps.",
-    stack: ["React Native", "Expo", "TensorFlow Lite", "SQLite"],
-    links: {
-      repo: "https://github.com/your-username/pocketchef",
-      demo: "https://youtu.be/demo",
-    },
-    category: "mobile",
-    highlight: true,
-  },
-  {
-    title: "DocsGen AI — LLM Technical Writer",
-    description:
-      "RAG pipeline that turns codebases into contextual docs with source-citation, chunking, and feedback loops.",
-    stack: ["Python", "FastAPI", "LangChain", "OpenAI", "Pinecone", "Docker"],
-    links: {
-      repo: "https://github.com/your-username/docsgen-ai",
-      demo: "https://docsgen.your-domain.com",
-    },
-    category: "ai",
-    highlight: true,
-  },
-  {
-    title: "Realtime Collab Whiteboard",
-    description:
-      "WebRTC + CRDT whiteboard with infinite canvas, multi-cursor presence, and offline sync.",
-    stack: ["React", "Yjs", "WebRTC", "tRPC", "Postgres"],
-    links: {
-      repo: "https://github.com/your-username/whiteboard",
-      demo: "https://whiteboard.your-domain.com",
-    },
-    category: "web",
-  },
-  {
-    title: "TripTailor — AI Trip Planner",
-    description:
-      "Planner that blends live data with LLM itineraries; uses tool-calling to fetch flights, weather, and POIs.",
-    stack: ["Next.js", "OpenAI", "Server Actions", "Redis"] ,
-    links: {
-      repo: "https://github.com/your-username/triptailor",
-      demo: "https://triptailor.your-domain.com",
-    },
-    category: "ai",
-  },
-];
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
 
-const aiDemos = [
-  {
-    name: "Code Explainer (RAG)",
-    description: "Ask questions about a repo; gets semantically relevant chunks with citations.",
-    tech: ["LangChain", "FAISS", "OpenAI GPT-4o"],
-  },
-  {
-    name: "Vision Captioner",
-    description: "Generates captions from images; supports mobile uploads.",
-    tech: ["Vision model", "React Native", "Serverless"],
-  },
-  {
-    name: "Chat with PDF",
-    description: "Citations, tables-to-markdown, and chunk feedback to boost retrieval quality.",
-    tech: ["Embeddings", "Pinecone", "FastAPI"],
-  },
-];
+<body>
 
-const education = [
-  {
-    school: "Florida Atlantic University",
-    program: "B.S. in Accounting (Junior)",
-    period: "2025 – 2027",
-  },
-  {
-    school: "Florida International University",
-    program: "Economics (transfer)",
-    period: "2023 – 2025",
-  },
-];
+  <!--
+    - #MAIN
+  -->
 
-const experience = [
-  {
-    company: "Example Corp",
-    role: "Software Engineer Intern",
-    period: "Summer 2025",
-    bullets: [
-      "Built internal dashboard with Next.js and Charting; reduced triage time by 30%.",
-      "Shipped feature flags and A/B experiments using LaunchDarkly + PostHog.",
-    ],
-  },
-  {
-    company: "US Marine Corps",
-    role: "Aviation Supply · Logistics",
-    period: "2019 – 2023",
-    bullets: [
-      "Led cross-rank communication and conflict resolution to keep ops on track.",
-      "Coordinated multi-site logistics, improving readiness and turnaround times.",
-    ],
-  },
-];
+  <main>
 
-// --- UI Helpers -------------------------------------------------------------
-const Section = ({ id, icon: Icon, title, description, children }) => (
-  <section id={id} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="mb-8"
-    >
-      <div className="flex items-center gap-3">
-        <Icon className="h-6 w-6" />
-        <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">{title}</h2>
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Richard hanrick" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Richard hanrick">Richard hanrick</h1>
+
+          <p class="title">Web developer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
       </div>
-      {description && (
-        <p className="mt-2 text-muted-foreground max-w-3xl">{description}</p>
-      )}
-    </motion.div>
-    {children}
-  </section>
-);
 
-const Pill = ({ children }) => (
-  <span className="px-3 py-1 rounded-full border text-sm">{children}</span>
-);
+      <div class="sidebar-info_more">
 
-const LinkIcon = ({ href, label, icon: Icon }) => (
-  <a href={href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:underline">
-    <Icon className="h-4 w-4" />
-    <span>{label}</span>
-    <ExternalLink className="h-3.5 w-3.5" />
-  </a>
-);
+        <div class="separator"></div>
 
-// --- Dark Mode Toggle -------------------------------------------------------
-function ThemeToggle() {
-  const [dark, setDark] = React.useState(true);
-  React.useEffect(() => {
-    const root = window.document.documentElement;
-    if (dark) root.classList.add("dark");
-    else root.classList.remove("dark");
-  }, [dark]);
-  return (
-    <Button variant="outline" size="icon" onClick={() => setDark((d) => !d)} aria-label="Toggle theme">
-      {dark ? <SunMedium className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-    </Button>
-  );
-}
+        <ul class="contacts-list">
 
-// --- Main Component ---------------------------------------------------------
-export default function Portfolio() {
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Navbar */}
-      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Rocket className="h-5 w-5" />
-            <span className="font-semibold">{profile.name}</span>
-            <span className="hidden sm:inline text-muted-foreground">· {profile.title}</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#projects" className="hover:underline">Projects</a>
-            <a href="#ai" className="hover:underline">AI</a>
-            <a href="#skills" className="hover:underline">Skills</a>
-            <a href="#experience" className="hover:underline">Experience</a>
-            <a href="#contact" className="hover:underline">Contact</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button asChild>
-              <a href={profile.github} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-                <Github className="h-4 w-4" /> Star on GitHub
-              </a>
-            </Button>
-          </div>
-        </div>
-      </header>
+          <li class="contact-item">
 
-      {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            <h1 className="text-3xl sm:text-5xl font-bold leading-tight">
-              {profile.name}
-            </h1>
-            <p className="mt-3 text-xl text-muted-foreground">{profile.title}</p>
-            <p className="mt-4 max-w-2xl text-base sm:text-lg">
-              {profile.tagline}
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Button asChild size="lg">
-                <a href="#projects"><Layout className="h-5 w-5 mr-2" /> View Projects</a>
-              </Button>
-              <Button asChild variant="secondary" size="lg">
-                <a href="#ai"><Brain className="h-5 w-5 mr-2" /> AI Work</a>
-              </Button>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <a href={profile.website} className="inline-flex items-center gap-1 hover:underline" target="_blank" rel="noreferrer"><Globe className="h-4 w-4" /> Website</a>
-                <a href={profile.linkedin} className="inline-flex items-center gap-1 hover:underline" target="_blank" rel="noreferrer"><Linkedin className="h-4 w-4" /> LinkedIn</a>
-              </div>
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
             </div>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            <Card className="shadow-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Sparkles className="h-5 w-5" /> Featured Tech</CardTitle>
-                <CardDescription>Stacks I use to ship reliably.</CardDescription>
-              </CardHeader>
-              <CardContent className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {["TypeScript", "React", "Next.js", "Node.js", "Python", "LangChain", "OpenAI", "Docker", "Postgres"].map((t) => (
-                  <Badge key={t} variant="secondary" className="justify-center py-1">{t}</Badge>
-                ))}
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Projects */}
-      <Section
-        id="projects"
-        icon={Layout}
-        title="Projects"
-        description="Selected web, mobile, and AI builds."
-      >
-        <Tabs defaultValue="all" className="w-full">
-          <TabsList className="mb-4">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="web">Web</TabsTrigger>
-            <TabsTrigger value="mobile">Mobile</TabsTrigger>
-            <TabsTrigger value="ai">AI</TabsTrigger>
-          </TabsList>
-          {(["all", "web", "mobile", "ai"] as const).map((tab) => (
-            <TabsContent key={tab} value={tab}>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects
-                  .filter((p) => tab === "all" || p.category === tab)
-                  .map((p) => (
-                    <Card key={p.title} className={p.highlight ? "border-primary/50" : ""}>
-                      <CardHeader>
-                        <CardTitle className="flex items-center justify-between gap-2">
-                          <span className="text-base sm:text-lg">{p.title}</span>
-                          <div className="flex gap-2">
-                            {p.links.demo && (
-                              <Button asChild variant="ghost" size="icon" aria-label="Demo">
-                                <a href={p.links.demo} target="_blank" rel="noreferrer"><Globe className="h-4 w-4" /></a>
-                              </Button>
-                            )}
-                            {p.links.repo && (
-                              <Button asChild variant="ghost" size="icon" aria-label="Repository">
-                                <a href={p.links.repo} target="_blank" rel="noreferrer"><Github className="h-4 w-4" /></a>
-                              </Button>
-                            )}
-                          </div>
-                        </CardTitle>
-                        <CardDescription>{p.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex flex-wrap gap-2">
-                          {p.stack.map((s) => (
-                            <Pill key={s}>{s}</Pill>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+
+              <a href="mailto:richard@example.com" class="contact-link">richard@example.com</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+
+              <a href="tel:+12133522795" class="contact-link">+1 (213) 352-2795</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Birthday</p>
+
+              <time datetime="1982-06-23">June 23, 1982</time>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+
+              <address>Sacramento, California, USA</address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>About</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Resume</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portfolio</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Blog</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about  active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media.
+            I enjoy
+            turning complex problems into simple, beautiful and intuitive designs.
+          </p>
+
+          <p>
+            My job is to build your website so that it is functional and user-friendly but at the same time attractive.
+            Moreover, I
+            add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring
+            across your
+            message and identity in the most creative way. I created web design for many famous brand companies.
+          </p>
+        </section>
+
+
+        <!--
+          - service
+        -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">What i'm doing</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg
+                " alt="design icon" width="40">
               </div>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </Section>
 
-      {/* AI Demos */}
-      <Section
-        id="ai"
-        icon={Brain}
-        title="AI Experiments & Demos"
-        description="LLM features, RAG pipelines, and applied ML in products."
-      >
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {aiDemos.map((d) => (
-            <Card key={d.name}>
-              <CardHeader>
-                <CardTitle className="text-base sm:text-lg flex items-center gap-2"><Cpu className="h-5 w-5" /> {d.name}</CardTitle>
-                <CardDescription>{d.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {d.tech.map((t) => (
-                    <Badge key={t} variant="outline">{t}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </Section>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web design</h4>
 
-      {/* Skills */}
-      <Section
-        id="skills"
-        icon={Code2}
-        title="Skills"
-        description="Focused on modern frontends, robust backends, and practical AI."
-      >
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader><CardTitle>Web</CardTitle><CardDescription>Front-end frameworks & tooling</CardDescription></CardHeader>
-            <CardContent className="flex flex-wrap gap-2">{skills.web.map((s) => <Pill key={s}>{s}</Pill>)}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader><CardTitle>Mobile</CardTitle><CardDescription>Cross-platform development</CardDescription></CardHeader>
-            <CardContent className="flex flex-wrap gap-2">{skills.mobile.map((s) => <Pill key={s}>{s}</Pill>)}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader><CardTitle>AI / ML</CardTitle><CardDescription>LLMs, RAG, model tooling</CardDescription></CardHeader>
-            <CardContent className="flex flex-wrap gap-2">{skills.ai.map((s) => <Pill key={s}>{s}</Pill>)}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader><CardTitle>Cloud & Data</CardTitle><CardDescription>Infra, databases, and ops</CardDescription></CardHeader>
-            <CardContent className="flex flex-wrap gap-2">{skills.cloud.map((s) => <Pill key={s}>{s}</Pill>)}</CardContent>
-          </Card>
-        </div>
-
-        <div className="mt-8 grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Database className="h-5 w-5" /> Currently Learning</CardTitle>
-              <CardDescription>Progress on new tools & concepts</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {[{ name: "Rust", pct: 35 }, { name: "LLM Agents", pct: 60 }, { name: "Kubernetes", pct: 25 }].map((i) => (
-                <div key={i.name}>
-                  <div className="mb-1 flex items-center justify-between text-sm"><span>{i.name}</span><span>{i.pct}%</span></div>
-                  <Progress value={i.pct} />
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Boxes className="h-5 w-5" /> Tech I Enjoy</CardTitle>
-              <CardDescription>Tools I reach for a lot</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              {["Zod", "Prisma", "PostHog", "Redux Toolkit", "tRPC", "Zustand", "Drizzle", "Playwright"].map((t) => (
-                <Badge key={t} variant="secondary">{t}</Badge>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
-      </Section>
-
-      {/* Experience & Education */}
-      <Section id="experience" icon={TerminalSquare} title="Experience & Education">
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader><CardTitle>Experience</CardTitle></CardHeader>
-            <CardContent className="space-y-6">
-              {experience.map((e) => (
-                <div key={`${e.company}-${e.role}`}> 
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium">{e.role} · {e.company}</h4>
-                    <span className="text-sm text-muted-foreground">{e.period}</span>
-                  </div>
-                  <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                    {e.bullets.map((b, i) => <li key={i}>{b}</li>)}
-                  </ul>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader><CardTitle>Education</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              {education.map((ed) => (
-                <div key={`${ed.school}-${ed.program}`}> 
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium flex items-center gap-2"><GraduationCap className="h-4 w-4" /> {ed.school}</h4>
-                    <span className="text-sm text-muted-foreground">{ed.period}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{ed.program}</p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
-      </Section>
-
-      {/* Contact */}
-      <Section id="contact" icon={Mail} title="Contact" description="Prefer email · open to internships, freelance, and collabs.">
-        <div className="grid md:grid-cols-3 gap-6 items-start">
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle>Let’s talk</CardTitle>
-              <CardDescription>Send an email and I’ll reply shortly.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <Input placeholder="Your name" />
-                <Input placeholder="Your email" />
-                <Input className="sm:col-span-2" placeholder="Subject" />
-                <textarea className="sm:col-span-2 w-full min-h-[120px] rounded-md border bg-background p-2 text-sm" placeholder="Message" />
-                <Button className="sm:col-span-2" size="lg">
-                  <Mail className="h-4 w-4 mr-2" /> Email me
-                </Button>
+                <p class="service-item-text">
+                  The most modern and high-quality design made at a professional level.
+                </p>
               </div>
-            </CardContent>
-          </Card>
-          <div className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Links</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <LinkIcon href={`mailto:${profile.email}`} label={profile.email} icon={Mail} />
-                <LinkIcon href={profile.github} label="GitHub" icon={Github} />
-                <LinkIcon href={profile.linkedin} label="LinkedIn" icon={Linkedin} />
-                <LinkIcon href={profile.website} label="Website" icon={Globe} />
-                <LinkIcon href="https://youtube.com/@yourhandle" label="YouTube" icon={Youtube} />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Résumé</CardTitle>
-                <CardDescription>One page · PDF</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild variant="secondary" className="w-full">
-                  <a href="/resume.pdf" target="_blank" rel="noreferrer">Download</a>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </Section>
 
-      {/* Footer */}
-      <footer className="border-t py-10 mt-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4" /> Built with React, Tailwind, and shadcn/ui
-          </div>
-          <div className="flex items-center gap-3">
-            <a className="hover:underline" href="#">Back to top</a>
-            <span>© {new Date().getFullYear()} {profile.name}</span>
-          </div>
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web development</h4>
+
+                <p class="service-item-text">
+                  High-quality development of sites at the professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Mobile apps</h4>
+
+                <p class="service-item-text">
+                  Professional development of applications for iOS and Android.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Photography</h4>
+
+                <p class="service-item-text">
+                  I make high-quality photos of any category at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!--
+          - testimonials
+        -->
+
+        <section class="testimonials">
+
+          <h3 class="h3 testimonials-title">Testimonials</h3>
+
+          <ul class="testimonials-list has-scrollbar">
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!--
+          - testimonials modal
+        -->
+
+        <div class="modal-container" data-modal-container>
+
+          <div class="overlay" data-overlay></div>
+
+          <section class="testimonials-modal">
+
+            <button class="modal-close-btn" data-modal-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <div class="modal-img-wrapper">
+              <figure class="modal-avatar-box">
+                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
+              </figure>
+
+              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+            </div>
+
+            <div class="modal-content">
+
+              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
+
+              <time datetime="2021-06-14">14 June, 2021</time>
+
+              <div data-modal-text>
+                <p>
+                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                  lot of experience
+                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                  consectetur adipiscing
+                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                </p>
+              </div>
+
+            </div>
+
+          </section>
+
         </div>
-      </footer>
+
+
+        <!--
+          - clients
+        -->
+
+        <section class="clients">
+
+          <h3 class="h3 clients-title">Clients</h3>
+
+          <ul class="clients-list has-scrollbar">
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-1-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-2-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-3-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-4-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-5-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-6-color.png" alt="client logo">
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #RESUME
+      -->
+
+      <article class="resume" data-page="resume">
+
+        <header>
+          <h2 class="h2 article-title">Resume</h2>
+        </header>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">Education</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">University school of the arts</h4>
+
+              <span>2007 — 2008</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">New york academy of art</h4>
+
+              <span>2006 — 2007</span>
+
+              <p class="timeline-text">
+                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
+                omnis..
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">High school of art and design</h4>
+
+              <span>2002 — 2004</span>
+
+              <p class="timeline-text">
+                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
+                magni dolores
+                eos.
+              </p>
+
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Creative director</h4>
+
+              <span>2015 — Present</span>
+
+              <p class="timeline-text">
+                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
+                molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Art director</h4>
+
+              <span>2013 — 2015</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Web designer</h4>
+
+              <span>2010 — 2013</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="skill">
+
+          <h3 class="h3 skills-title">My skills</h3>
+
+          <ul class="skills-list content-card">
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Web design</h5>
+                <data value="80">80%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Graphic design</h5>
+                <data value="70">70%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 70%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Branding</h5>
+                <data value="90">90%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">WordPress</h5>
+                <data value="50">50%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 50%;"></div>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #PORTFOLIO
+      -->
+
+      <article class="portfolio" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web design</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Applications</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web development</button>
+            </li>
+
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web design</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Applications</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web development</button>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <ul class="project-list">
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Finance</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Orizon</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Fundo</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="applications">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Brawlhalla</h3>
+
+                <p class="project-category">Applications</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
+                </figure>
+
+                <h3 class="project-title">DSM.</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">MetaSpark</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Summary</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="applications">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Task Manager</h3>
+
+                <p class="project-category">Applications</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Arrival</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #BLOG
+      -->
+
+      <article class="blog" data-page="blog">
+
+        <header>
+          <h2 class="h2 article-title">Blog</h2>
+        </header>
+
+        <section class="blog-posts">
+
+          <ul class="blog-posts-list">
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
+
+                  <p class="blog-text">
+                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
+
+                  <p class="blog-text">
+                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #80</h3>
+
+                  <p class="blog-text">
+                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
+
+                  <p class="blog-text">
+                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
+
+                  <p class="blog-text">
+                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #79</h3>
+
+                  <p class="blog-text">
+                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #CONTACT
+      -->
+
+      <article class="contact" data-page="contact">
+
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+        <section class="mapbox" data-mapbox>
+          <figure>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
+              width="400" height="300" loading="lazy"></iframe>
+          </figure>
+        </section>
+
+        <section class="contact-form">
+
+          <h3 class="h3 form-title">Contact Form</h3>
+
+          <form action="#" class="form" data-form>
+
+            <div class="input-wrapper">
+              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+
+              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+            </div>
+
+            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>Send Message</span>
+            </button>
+
+          </form>
+
+        </section>
+
+      </article>
+
     </div>
-  );
-}
+
+  </main>
+
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
